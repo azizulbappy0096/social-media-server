@@ -2,11 +2,9 @@ const userModel = require("../../models/User");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
+const { registerValidator } = require("../../utils/validator");
 
 module.exports = {
-  Query: {
-    get: () => "Get",
-  },
 
   Mutation: {
     register: async (
@@ -16,14 +14,22 @@ module.exports = {
       info
     ) => {
       try {
-        let exist = await userModel.findOne({ username: username });
+        const { errors, valid } = registerValidator(username, email, password, confirmPassword)
+
+        if(!valid) {
+          console.log(errors)
+          throw new UserInputError('Validation errors', {errors});
+          
+        }
+
+        let exist = await userModel.findOne({ "username": username});
 
         if(exist) {
-            throw new UserInputError("Username is already taken", {
+            throw new UserInputError('Username is already taken', {
                 errors: {
                     username: "This username is not available"
                 }
-            })
+            });
         }
         
         const salt = await bcryptjs.genSalt(10);

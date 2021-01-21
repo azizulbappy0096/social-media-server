@@ -1,6 +1,8 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+// typdefs and resolvers
 const typeDefs = require("./graphql/query/query");
 const resolvers = require("./graphql/resolvers/resolvers");
 
@@ -14,34 +16,10 @@ mongoose.connect(
   () => console.log("Connect to MongoDB")
 );
 
-// const typeDefs = gql`
-//   type Query {
-//     sayHi: String!,
-    
-//   }
-// `;
-
-// const typeDefs1 = gql`
-//   extend type Query {
-//     say: String!
-//   }
-// `;
-
-// const resolvers = {
-//   Query: {
-//     sayHi: () => "Hello World",
-//   },
-// };
-
-// const resolvers1 = {
-//     Query: {
-//       say: () => "Hello 1",
-//     },
-//   };
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers: resolvers
+  resolvers
 });
 
 server.listen({ port: 5000 }).then((res) => {
