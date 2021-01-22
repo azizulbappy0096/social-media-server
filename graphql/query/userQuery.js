@@ -1,16 +1,23 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
-    type RegisterType {
-        id: ID!,
-        token: String!,
-        username: String!,
-        email: String!,
-        createdAt: String!
-    }
+  ## schema types
+  type UserType {
+    id: ID!
+    token: String!
+    username: String!
+    email: String!
+    createdAt: String!
+  }
 
-    type Mutation {
-        register(username: String! email: String! password: String! confirmPassword: String!): RegisterType
-    }
+  ## user mutations
+  type Mutation {
+    register(
+      username: String!
+      email: String!
+      password: String!
+      confirmPassword: String!
+    ): UserType
+    login(username: String!, password: String!): UserType
+  }
 `;
-

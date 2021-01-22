@@ -1,3 +1,4 @@
+// import resolvers
 const userResolver = require('./userResolver');
 const postResolver = require("./postResolver");
 

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// post schema MongoDB
 const PostSchema = new mongoose.Schema({
     username: String,
     body: String,
@@ -7,6 +8,7 @@ const PostSchema = new mongoose.Schema({
     comments: [
         {
             username: String,
+            body: String,
             createdAt: String
         }
     ],

@@ -1,3 +1,4 @@
+// import modules
 const { ApolloServer } = require("apollo-server");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -16,12 +17,14 @@ mongoose.connect(
   () => console.log("Connect to MongoDB")
 );
 
-
+// set-up apollo-server
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: ({ req }) => ({ req }),
 });
 
+// start listening server on port 5000
 server.listen({ port: 5000 }).then((res) => {
   console.log(`Server is running on port: ${res.url}`);
 });

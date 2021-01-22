@@ -1,3 +1,4 @@
+// validate user input before registration
 const registerValidator = (username, email, password, confirmPassword) => {
     let errors ={};
     const passRegEx = /^.{6,}$/;
@@ -20,6 +21,23 @@ const registerValidator = (username, email, password, confirmPassword) => {
         errors,
         valid: Object.keys(errors).length < 1 ? true : false
     }
+};
+
+// validate user input before login
+const loginValidator = (username, password) => {
+    let errors = {};
+
+    if(username.trim() === "") {
+        errors.username = "You must use a valid username";
+    }
+    if(password === "") {
+        errors.password = "You must use a valid password";
+    }
+
+    return {
+        errors,
+        valid: Object.keys(errors).length < 1 ? true : false
+    }
 }
 
-module.exports = { registerValidator };
+module.exports = { registerValidator, loginValidator };
