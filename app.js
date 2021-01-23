@@ -1,11 +1,13 @@
 // import modules
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer, PubSub } = require("apollo-server");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
 // typdefs and resolvers
 const typeDefs = require("./graphql/query/query");
 const resolvers = require("./graphql/resolvers/resolvers");
+
+const pubsub = new PubSub();
 
 // connect to MongoDB
 mongoose.connect(
@@ -21,7 +23,7 @@ mongoose.connect(
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ req }),
+  context: ({ req }) => ({ req, pubsub }),
 });
 
 // start listening server on port 5000
